@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sổ Tay GitHub — Hướng Dẫn Toàn Diện</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f7fa; color: #24292f; line-height: 1.7; }
+
+/* NAV SIDEBAR */
+.sidebar {
+  position: fixed; top: 0; left: 0; width: 240px; height: 100vh;
+  background: #0d1117; color: #e6edf3; overflow-y: auto; z-index: 100;
+  padding: 24px 0;
+}
+.sidebar .logo { padding: 0 20px 24px; border-bottom: 1px solid #21262d; display: flex; align-items: center; gap: 10px; }
+.sidebar .logo span { font-size: 1.4em; }
+.sidebar .logo h2 { font-size: 0.95em; color: #58a6ff; font-weight: 700; }
+.nav-section { padding: 16px 20px 8px; font-size: 0.72em; color: #6e7681; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+.nav-item { display: block; padding: 8px 20px; color: #8b949e; text-decoration: none; font-size: 0.88em; transition: all 0.15s; border-left: 3px solid transparent; }
+.nav-item:hover, .nav-item.active { color: #e6edf3; background: #161b22; border-left-color: #58a6ff; }
+.nav-item .num { color: #58a6ff; font-weight: 700; margin-right: 6px; font-size: 0.85em; }
+
+/* MAIN CONTENT */
+.main { margin-left: 240px; }
+
+/* COVER */
+.cover {
+  background: linear-gradient(160deg, #0d1117 0%, #161b22 60%, #1f2937 100%);
+  color: white; padding: 100px 80px; min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.cover .tag { background: #238636; color: white; padding: 6px 16px; border-radius: 20px; font-size: 0.8em; font-weight: 600; display: inline-block; margin-bottom: 32px; }
+.cover h1 { font-size: 3.4em; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+.cover h1 .accent { color: #58a6ff; }
+.cover .subtitle { font-size: 1.1em; color: #8b949e; max-width: 560px; margin-bottom: 48px; }
+.cover .toc-preview { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 560px; }
+.cover .toc-item { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 12px 16px; font-size: 0.85em; color: #8b949e; }
+.cover .toc-item strong { color: #e6edf3; display: block; margin-bottom: 2px; }
+
+/* SECTION */
+.section-wrap { padding: 60px 60px; max-width: 900px; }
+
+.chapter-hero {
+  background: linear-gradient(135deg, #0d1117, #161b22);
+  border: 1px solid #30363d; border-radius: 16px;
+  padding: 40px 48px; margin-bottom: 36px;
+  display: flex; align-items: center; gap: 28px;
+}
+.ch-num { font-size: 3.5em; font-weight: 900; color: #58a6ff; line-height: 1; min-width: 72px; }
+.ch-info h2 { font-size: 1.7em; color: #e6edf3; margin-bottom: 6px; }
+.ch-info p { color: #6e7681; font-size: 0.95em; }
+
+.card { background: white; border-radius: 12px; padding: 28px 32px; margin-bottom: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid #e1e4e8; }
+.card h3 { font-size: 1.1em; color: #0d1117; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+
+/* Screenshot */
+.ss-wrap { border: 2px solid #e1e4e8; border-radius: 10px; overflow: hidden; margin: 20px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+.ss-bar { background: #f6f8fa; border-bottom: 1px solid #e1e4e8; padding: 8px 14px; display: flex; align-items: center; gap: 7px; font-size: 0.78em; color: #57606a; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.dr { background: #ff5f57; } .dy { background: #ffbd2e; } .dg { background: #28c840; }
+.ss-url { background: white; border: 1px solid #d0d7de; border-radius: 5px; padding: 3px 10px; flex: 1; font-family: monospace; color: #24292f; }
+.ss-wrap img { width: 100%; display: block; }
+.ss-caption { text-align: center; font-size: 0.82em; color: #57606a; margin-top: 6px; font-style: italic; }
+
+/* Steps */
+.steps { list-style: none; }
+.steps li { display: flex; gap: 16px; padding: 12px 0; border-bottom: 1px solid #f0f3f6; }
+.steps li:last-child { border-bottom: none; }
+.step-n { width: 30px; height: 30px; border-radius: 50%; background: #0969da; color: white; font-size: 0.82em; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.step-body strong { display: block; color: #0d1117; margin-bottom: 2px; }
+.step-body p { color: #57606a; font-size: 0.92em; }
+
+/* Info boxes */
+.box { border-radius: 8px; padding: 14px 18px; margin: 14px 0; display: flex; gap: 12px; }
+.box-i { background: #ddf4ff; border-left: 4px solid #0969da; }
+.box-w { background: #fff8c5; border-left: 4px solid #9a6700; }
+.box-s { background: #dafbe1; border-left: 4px solid #2da44e; }
+.box-icon { font-size: 1.1em; flex-shrink: 0; margin-top: 2px; }
+
+/* Tabs illustration */
+.gh-tabs { display: flex; gap: 0; border-bottom: 2px solid #e1e4e8; margin: 16px 0; overflow-x: auto; }
+.gh-tab { padding: 10px 16px; font-size: 0.88em; color: #57606a; cursor: default; white-space: nowrap; display: flex; align-items: center; gap: 6px; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+.gh-tab.active { color: #24292f; font-weight: 600; border-bottom-color: #fd8c73; }
+.gh-tab .badge { background: #e1e4e8; color: #57606a; font-size: 0.75em; padding: 1px 6px; border-radius: 10px; }
+.gh-tab.active .badge { background: #24292f; color: white; }
+
+/* Feature grid */
+.feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.feat-card { border: 1px solid #e1e4e8; border-radius: 10px; padding: 18px; }
+.feat-card .feat-icon { font-size: 1.5em; margin-bottom: 10px; }
+.feat-card h4 { font-size: 0.95em; color: #0d1117; margin-bottom: 6px; }
+.feat-card p { font-size: 0.85em; color: #57606a; }
+
+/* Code block */
+.code-block { background: #0d1117; color: #e6edf3; border-radius: 8px; padding: 16px 20px; font-family: 'Consolas', monospace; font-size: 0.88em; margin: 14px 0; overflow-x: auto; }
+.code-block .comment { color: #6e7681; }
+.code-block .cmd { color: #79c0ff; }
+.code-block .arg { color: #ffa657; }
+.code-block .str { color: #a5d6ff; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9em; }
+th { background: #0d1117; color: #e6edf3; padding: 10px 14px; text-align: left; font-weight: 600; }
+td { padding: 10px 14px; border-bottom: 1px solid #e1e4e8; }
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: #f6f8fa; }
+
+/* Label / badge */
+.lbl { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.78em; font-weight: 600; }
+.lbl-open { background: #dafbe1; color: #1a7f37; border: 1px solid #82cfaa; }
+.lbl-closed { background: #ffebe9; color: #cf222e; border: 1px solid #f1a1a8; }
+.lbl-merged { background: #f3eeff; color: #6e40c9; border: 1px solid #d2b4fe; }
+
+/* Divider */
+.divider { border: none; border-top: 2px solid #e1e4e8; margin: 40px 0; }
+
+/* Footer */
+footer { background: #0d1117; color: #6e7681; text-align: center; padding: 40px; font-size: 0.85em; }
+footer strong { color: #e6edf3; }
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; }
+  .section-wrap { padding: 30px 20px; }
+  .cover { padding: 60px 24px; }
+  .feat-grid, .cover .toc-preview { grid-template-columns: 1fr; }
+  .cover h1 { font-size: 2.2em; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="logo">
+    <span>🐙</span>
+    <h2>Sổ Tay GitHub</h2>
+  </div>
+
+  <div class="nav-section">Bắt đầu</div>
+  <a href="#cover" class="nav-item active"><span class="num">00</span>Giới thiệu</a>
+
+  <div class="nav-section">Cơ bản</div>
+  <a href="#ch01" class="nav-item"><span class="num">01</span>GitHub là gì?</a>
+  <a href="#ch02" class="nav-item"><span class="num">02</span>Dashboard & Giao diện</a>
+  <a href="#ch03" class="nav-item"><span class="num">03</span>Tạo Repository</a>
+
+  <div class="nav-section">Làm việc với Code</div>
+  <a href="#ch04" class="nav-item"><span class="num">04</span>Giao diện Repository</a>
+  <a href="#ch05" class="nav-item"><span class="num">05</span>Commit & Lịch sử</a>
+  <a href="#ch06" class="nav-item"><span class="num">06</span>Branch (Nhánh)</a>
+
+  <div class="nav-section">Cộng tác</div>
+  <a href="#ch07" class="nav-item"><span class="num">07</span>Issues</a>
+  <a href="#ch08" class="nav-item"><span class="num">08</span>Pull Request</a>
+  <a href="#ch09" class="nav-item"><span class="num">09</span>Fork</a>
+
+  <div class="nav-section">Tài khoản</div>
+  <a href="#ch10" class="nav-item"><span class="num">10</span>GitHub Profile</a>
+  <a href="#ch11" class="nav-item"><span class="num">11</span>Lệnh Git cơ bản</a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- COVER -->
+<div class="cover" id="cover">
+  <div class="tag">📖 Sổ Tay Toàn Diện · Phiên bản 2026</div>
+  <h1>Sổ Tay<br><span class="accent">GitHub</span><br>Dành Cho Người Mới</h1>
+  <p class="subtitle">Hướng dẫn từng bước với ảnh chụp thực tế — từ khái niệm cơ bản đến cộng tác nhóm chuyên nghiệp.</p>
+  <div class="toc-preview">
+    <div class="toc-item"><strong>01 — GitHub là gì?</strong>Git, repo, cloud</div>
+    <div class="toc-item"><strong>02 — Dashboard</strong>Giao diện tổng quan</div>
+    <div class="toc-item"><strong>03 — Tạo Repository</strong>Bước đầu tiên</div>
+    <div class="toc-item"><strong>04 — Giao diện Repo</strong>Code, tabs, file</div>
+    <div class="toc-item"><strong>05 — Commit & Lịch sử</strong>Theo dõi thay đổi</div>
+    <div class="toc-item"><strong>06 — Branch</strong>Làm việc song song</div>
+    <div class="toc-item"><strong>07 — Issues</strong>Quản lý công việc</div>
+    <div class="toc-item"><strong>08 — Pull Request</strong>Review & merge code</div>
+    <div class="toc-item"><strong>09 — Fork</strong>Sao chép repo</div>
+    <div class="toc-item"><strong>10 — Profile</strong>Trang cá nhân</div>
+  </div>
+</div>
+
+<!-- ======== CH01 ======== -->
+<div class="section-wrap" id="ch01">
+  <div class="chapter-hero">
+    <div class="ch-num">01</div>
+    <div class="ch-info">
+      <h2>GitHub là gì?</h2>
+      <p>Hiểu rõ nền tảng trước khi bắt đầu</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🌐 Ba khái niệm cốt lõi</h3>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon">📦</div>
+        <h4>Git</h4>
+        <p>Phần mềm <strong>theo dõi thay đổi</strong> trong code. Chạy trên máy tính của bạn (offline).</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">☁️</div>
+        <h4>GitHub</h4>
+        <p><strong>Nền tảng đám mây</strong> lưu trữ code Git trực tuyến. Thêm tính năng cộng tác, review, CI/CD...</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📁</div>
+        <h4>Repository (Repo)</h4>
+        <p>Một <strong>thư mục dự án</strong> trên GitHub. Chứa toàn bộ code + lịch sử thay đổi.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">💾</div>
+        <h4>Commit</h4>
+        <p>Một <strong>điểm lưu</strong> trong lịch sử. Mỗi commit ghi lại ai thay đổi gì, lúc nào.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔄 Quy trình làm việc cơ bản</h3>
+    <ul class="steps">
+      <li><div class="step-n">1</div><div class="step-body"><strong>Tạo hoặc Clone repo</strong><p>Tạo repo mới trên GitHub, hoặc tải repo có sẵn về máy.</p></div></li>
+      <li><div class="step-n">2</div><div class="step-body"><strong>Chỉnh sửa file</strong><p>Viết code, thêm file, sửa nội dung trên máy tính.</p></div></li>
+      <li><div class="step-n">3</div><div class="step-body"><strong>Commit thay đổi</strong><p>Lưu điểm checkpoint với mô tả rõ ràng về những gì đã thay đổi.</p></div></li>
+      <li><div class="step-n">4</div><div class="step-body"><strong>Push lên GitHub</strong><p>Đẩy code từ máy lên GitHub để lưu trữ và chia sẻ.</p></div></li>
+      <li><div class="step-n">5</div><div class="step-body"><strong>Pull / Cộng tác</strong><p>Kéo code mới nhất từ người khác về máy để tiếp tục làm việc.</p></div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>🆚 GitHub vs các công cụ khác</h3>
+    <table>
+      <thead><tr><th>Công cụ</th><th>Giống nhau</th><th>Khác biệt</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Google Drive</strong></td><td>Lưu trữ đám mây</td><td>Drive không theo dõi thay đổi dòng code; GitHub theo dõi từng ký tự thay đổi</td></tr>
+        <tr><td><strong>Dropbox</strong></td><td>Sync file</td><td>Không có tính năng review code, PR, branching</td></tr>
+        <tr><td><strong>GitLab / Bitbucket</strong></td><td>Tương tự GitHub</td><td>GitHub phổ biến nhất, nhiều open source, tích hợp rộng nhất</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ======== CH02 ======== -->
+<div class="section-wrap" id="ch02">
+  <div class="chapter-hero">
+    <div class="ch-num">02</div>
+    <div class="ch-info">
+      <h2>Dashboard & Giao diện chính</h2>
+      <p>Làm quen với trang chủ sau khi đăng nhập</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🖥️ Trang Dashboard (github.com)</h3>
+    <div class="ss-wrap">
+      <div class="ss-bar"><span class="dot dr"></span><span class="dot dy"></span><span class="dot dg"></span><span class="ss-url">🔒 github.com</span></div>
+      <img src="gh_dashboard.png" alt="GitHub Dashboard">
+    </div>
+    <p class="ss-caption">↑ Trang chủ GitHub sau khi đăng nhập — bạn thấy feed hoạt động và repo gần đây</p>
+  </div>
+
+  <div class="card">
+    <h3>📌 Các thành phần chính trên Dashboard</h3>
+    <ul class="steps">
+      <li>
+        <div class="step-n">①</div>
+        <div class="step-body">
+          <strong>Thanh điều hướng trên cùng (Top Nav)</strong>
+          <p>Chứa: logo GitHub, ô tìm kiếm, thông báo 🔔, avatar tài khoản, và nút <strong>+</strong> để tạo repo/gist mới nhanh.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-n">②</div>
+        <div class="step-body">
+          <strong>Feed hoạt động (Activity Feed)</strong>
+          <p>Hiển thị các sự kiện mới nhất từ người bạn theo dõi và repo bạn đã star — commit mới, PR, issue...</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-n">③</div>
+        <div class="step-body">
+          <strong>Repo gần đây (Top Repositories)</strong>
+          <p>Cột bên trái liệt kê các repo bạn truy cập gần nhất. Nhấn để mở nhanh.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-n">④</div>
+        <div class="step-body">
+          <strong>Explore (Khám phá)</strong>
+          <p>GitHub gợi ý repo và người dùng phù hợp với sở thích của bạn.</p>
+        </div>
+      </li>
+    </ul>
+    <div class="box box-i">
+      <span class="box-icon">💡</span>
+      <div>Nhấn vào <strong>avatar (ảnh đại diện)</strong> góc trên phải → menu hiện ra: Your profile, Your repositories, Settings...</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ======== CH03 ======== -->
+<div class="section-wrap" id="ch03">
+  <div class="chapter-hero">
+    <div class="ch-num">03</div>
+    <div class="ch-info">
+      <h2>Tạo Repository mới</h2>
+      <p>Khởi động dự án của bạn trên GitHub</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🚀 Truy cập trang tạo repo</h3>
+    <p>Có 3 cách vào trang tạo repo:</p>
+    <ul class="steps">
+      <li><div class="step-n">A</div><div class="step-body"><strong>URL trực tiếp:</strong><p>Gõ <code style="background:#f0f0f0;padding:2px 6px;border-radius:4px;">github.com/new</code> vào thanh địa chỉ trình duyệt</p></div></li>
+      <li><div class="step-n">B</div><div class="step-body"><strong>Nút + trên nav bar:</strong><p>Click <strong>+</strong> → chọn <em>New repository</em></p></div></li>
+      <li><div class="step-n">C</div><div class="step-body"><strong>Trang Your repositories:</strong><p>Click nút <em>New</em> màu xanh lá ở góc trên phải</p></div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>📋 Form tạo repo — Phần General</h3>
+    <div class="ss-wrap">
+      <div class="ss-bar"><span class="dot dr"></span><span class="dot dy"></span><span class="dot dg"></span><span class="ss-url">🔒 github.com/new</span></div>
+      <img src="s1_general.png" alt="Phần General khi tạo repo">
+    </div>
+    <table style="margin-top:16px;">
+      <thead><tr><th>Trường</th><th>Ý nghĩa</th><th>Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Owner *</strong></td><td>Tài khoản sở hữu repo</td><td>Thường là tên bạn, hoặc tên tổ chức</td></tr>
+        <tr><td><strong>Repository name *</strong></td><td>Tên định danh duy nhất</td><td>Dùng <code>-</code> thay dấu cách, không ký tự đặc biệt</td></tr>
+        <tr><td><strong>Description</strong></td><td>Mô tả ngắn dự án</td><td>Không bắt buộc, nhưng nên điền</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>⚙️ Form tạo repo — Phần Configuration</h3>
+    <div class="ss-wrap">
+      <div class="ss-bar"><span class="dot dr"></span><span class="dot dy"></span><span class="dot dg"></span><span class="ss-url">🔒 github.com/new</span></div>
+      <img src="s2_config.png" alt="Phần Configuration khi tạo repo">
+    </div>
+    <table style="margin-top:16px;">
+      <thead><tr><th>Cài đặt</th><th>Lựa chọn</th><th>Nên chọn gì?</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Visibility</strong></td><td>Public / Private</td><td>Public để chia sẻ, Private để bảo mật</td></tr>
+        <tr><td><strong>Add README</strong></td><td>On / Off</td><td>✅ Nên bật — tạo trang giới thiệu dự án</td></tr>
+        <tr><td><strong>Add .gitignore</strong></td><td>Theo ngôn ngữ</td><td>Chọn đúng ngôn ngữ dự án (Node, Python...)</td></tr>
+        <tr><td><strong>Add license</strong></td><td>MIT, Apache... / None</td><td>MIT nếu muốn open source</td></tr>
+      </tbody>
+    </table>
+    <div class="box box-s">
+      <span class="box-icon">✅</span>
+      <div>Sau khi điền xong → bấm nút <strong style="background:#2da44e;color:white;padding:3px 10px;border-radius:5px;">Create repository</strong> màu xanh lá ở cuối trang.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ======== CH04 ======== -->
+<div class="section-wrap" id="ch04">
+  <div class="chapter-hero">
+    <div class="ch-num">04</div>
+    <div class="ch-info">
+      <h2>Giao diện Repository</h2>
+      <p>Khám phá các tab và tính năng bên trong một repo</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🗂️ Tổng quan trang Repository</h3>
+    <div class="ss-wrap">
+      <div class="ss-bar"><span class="dot dr"></span><span class="dot dy"></span><span class="dot dg"></span><span class="ss-url">🔒 github.com/github/gitignore</span></div>
+      <img src="gh_repo_code.png" alt="Giao diện một Repository trên GitHub">
+    </div>
+    <p class="ss-caption">↑ Trang chính của một repository — ví dụ: github.com/github/gitignore</p>
+  </div>
+
+  <div class="card">
+    <h3>📑 Ý nghĩa các Tab chính</h3>
+    <div class="gh-tabs">
+      <div class="gh-tab active">📄 Code</div>
+      <div class="gh-tab">⚠️ Issues <span class="badge">42</span></div>
+      <div class="gh-tab">🔀 Pull requests <span class="badge">8</span></div>
+      <div class="gh-tab">⚡ Actions</div>
+      <div class="gh-tab">📊 Projects</div>
+      <div class="gh-tab">🔒 Security</div>
+      <div class="gh-tab">📈 Insights</div>
+      <div class="gh-tab">⚙️ Settings</div>
+    </div>
+    <table>
+      <thead><tr><th>Tab</th><th>Nội dung</th><th>Dùng khi nào?</th></tr></thead>
+      <tbody>
+        <tr><td>📄 <strong>Code</strong></td><td>Duyệt file, xem nội dung</td><td>Mặc định — xem code dự án</td></tr>
+        <tr><td>⚠️ <strong>Issues</strong></td><td>Danh sách lỗi / nhiệm vụ</td><td>Báo lỗi, đề xuất tính năng mới</td></tr>
+        <tr><td>🔀 <strong>Pull Requests</strong></td><td>Đề xuất thay đổi code</td><td>Review code trước khi merge</td></tr>
+        <tr><td>⚡ <strong>Actions</strong></td><td>CI/CD tự động</td><td>Tự động test/deploy khi push code</td></tr>
+        <tr><td>⚙️ <strong>Settings</strong></td><td>Cài đặt repo</td><td>Chỉ chủ repo mới thấy và sửa được</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>📁 Các thành phần trong tab Code</h3>
+    <ul class="steps">
+      <li><div class="step-n">A</div><div class="step-body"><strong>Branch selector (Chọn nhánh)</strong><p>Nút dropdown hiển thị nhánh hiện tại (thường là <code>main</code>). Nhấn để chuyển sang nhánh khác.</p></div></li>
+      <li><div class="step-n">B</div><div class="step-body"><strong>File browser (Duyệt file)</strong><p>Danh sách file và thư mục. Nhấn vào file để xem nội dung, nhấn vào folder để đi vào trong.</p></div></li>
+      <li><div class="step-n">C</div><div class="step-body"><strong>Commit message gần nhất</strong><p>Mỗi file hiển thị mô tả commit cuối cùng thay đổi nó — giúp bạn biết file được cập nhật vì lý do gì.</p></div></li>
+      <li><div class="step-n">D</div><div class="step-body"><strong>README.md</strong><p>Tự động hiển thị phía dưới danh sách file — đây là "bìa" của dự án.</p></div></li>
+      <li><div class="step-n">E</div><div class="step-body"><strong>Nút Code (xanh lá)</strong><p>Mở dropdown để clone repo (HTTPS/SSH) hoặc tải ZIP về máy.</p></div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>✏️ Chỉnh sửa file trực tiếp trên GitHub</h3>
+    <p>Bạn có thể chỉnh sửa file mà <strong>không cần cài Git hay clone về máy</strong>:</p>
+    <ul class="steps">
+      <li><div class="step-n">1</div><div class="step-body"><strong>Nhấn vào tên file</strong><p>Mở xem nội dung file.</p></div></li>
+      <li><div class="step-n">2</div><div class="step-body"><strong>Nhấn icon ✏️ (Edit)</strong><p>Nút bút chì ở góc trên phải vùng nội dung file.</p></div></li>
+      <li><div class="step-n">3</div><div class="step-body"><strong>Sửa nội dung</strong><p>GitHub cung cấp editor đơn giản ngay trong trình duyệt.</p></div></li>
+      <li><div class="step-n">4</div><div class="step-body"><strong>Commit changes</strong><p>Điền mô tả thay đổi → bấm <em>Commit changes</em>. Thay đổi được lưu ngay.</p></div></li>
+    </ul>
+    <div class="box box-i">
+      <span class="box-icon">💡</span>
+      <div>GitHub còn có editor mạnh hơn — nhấn phím <strong>.</strong> (dấu chấm) khi đang ở trang repo để mở <strong>github.dev</strong> — editor giống VS Code ngay trong trình duyệt!</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ======== CH05 ======== -->
+<div class="section-wrap" id="ch05">
+  <div class="chapter-hero">
+    <div class="ch-num">05</div>
+    <div class="ch-info">
+      <h2>Commit & Lịch sử thay đổi</h2>
+      <p>Xem ai đã thay đổi gì, khi nào, vì sao</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📜 Trang Commits History</h3>
+    <div class="ss-wrap">
+      <div class="ss-bar"><span class="dot dr"></span><span class="dot dy"></span><span class="dot dg"></span><span class="ss-url">🔒 github.com/github/gitignore/commits/main</span></div>
+      <img src="gh_commits.png" alt="Lịch sử commits trên GitHub">
+    </div>
+    <p class="ss-caption">↑ Danh sách các commits — mỗi dòng là một lần lưu thay đổi</p>
+  </div>
+
+  <div class="card">
+    <h3>🔍 Đọc hiểu một Commit</h3>
+    <ul class="steps">
+      <li><div class="step-n">📝</div><div class="step-body"><strong>Commit message</strong><p>Mô tả ngắn về thay đổi (do người commit viết). Ví dụ: <em>"Fix typo in README"</em>, <em>"Add login feature"</em></p></div></li>
+      <li><div class="step-n">👤</div><div class="step-body"><strong>Tác giả (Author)</strong><p>Tên + avatar người đã tạo commit. Nhấn để xem profile.</p></div></li>
+      <li><div class="step-n">🕐</div><div class="step-body"><strong>Thời gian</strong><p>Cách đây bao lâu (hover để xem ngày giờ cụ thể).</p></div></li>
+      <li><div class="step-n">#</div><div class="step-body"><strong>Commit hash</strong><p>Mã định danh duy nhất (7 ký tự hiển thị, đầy đủ là 40 ký tự). Dùng để tham chiếu trong lệnh Git.</p></div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>💬 Quy tắc viết Commit message tốt</h3>
+    <table>
+      <thead><tr><th>❌ Không nên</th><th>✅ Nên viết</th></tr></thead>
+      <tbody>
+        <tr><td>fix</td><td>Fix null pointer error in login form</td></tr>
+        <tr><td>update</td><td>Update README with installation steps</td></tr>
+        <tr><td>abc</td><td>Add user authentication with JWT</td></tr>
+        <tr><td>changed stuff</td><td>Refactor database connection pooling</td></tr>
+      </tbody>
+    </table>
+    <div class="box box-i">
+      <span class="box-icon">💡</span>
+      <div><strong>Công thức:</strong> Dùng động từ hiện tại — <em>"Add"</em>, <em>"Fix"</em>, <em>"Update"</em>, <em>"Remove"</em>, <em>"Refactor"</em>. Viết như hoàn thành câu: <em>"This commit will [message]"</em></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>💻 Lệnh Commit trên Terminal</h3>
+    <div class="code-block">
+<span class="comment"># 1. Xem trạng thái file thay đổi</span>
+<span class="cmd">git</span> <span class="arg">status</span>
+
+<span class="comment"># 2. Thêm file vào staging area</span>
+<span class="cmd">git</span> <span class="arg">add</span> <span class="str">.</span>          <span class="comment"># Thêm tất cả file</span>
+<span class="cmd">git</span> <span class="arg">add</span> <span class="str">index.html</span>  <span class="comment"># Thêm file cụ thể</span>
+
+<span class="comment"># 3. Tạo commit với message</span>
+<span class="cmd">git</span> <span class="arg">commit</span> -m <span class="str">"Add homepage layout"</span>
+
+<span class="comment"># 4. Đẩy lên GitHub</span>
+<span class="cmd">git</span> <span class="arg">push</span> origin main
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ======== CH06 ======== -->
+<div class="section-wrap" id="ch06">
+  <div class="chapter-hero">
+    <div class="ch-num">06</div>
+    <div class="ch-info">
+      <h2>Branch (Nhánh)</h2>
+      <p>Làm việc song song mà không ảnh hưởng code chính</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🌿 Branch là gì?</h3>
+    <p>Hình dung repo như một <strong>cây</strong>. Nhánh <code>main</code> là thân cây (code chính thức). <strong>Branch mới</strong> là cành cây — bạn thử nghiệm tính năng mới mà không lo làm hỏng thân cây.</p>
+    <div class="box box-i" style="margin-top:16px;">
+      <span class="box-icon">🎯</span>
+      <div><strong>Ví dụ thực tế:</strong> Bạn đang làm tính năng "đăng nhập". Tạo branch <code>feature/login</code>, làm xong, test ổn → mới merge vào <code>main</code>. Trong lúc đó, đồng nghiệp vẫn làm branch khác bình thường.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📋 Quy ước đặt tên branch</h3>
+    <table>
+      <thead><tr><th>Loại</th><th>Tên mẫu</th><th>Dùng khi</th></tr></thead>
+      <tbody>
+        <tr><td>Tính năng mới</td><td><code>feature/ten-tinh-nang</code></td><td>Thêm chức năng mới</td></tr>
+        <tr><td>Sửa lỗi</td><td><code>fix/mo-ta-loi</code></td><td>Sửa bug cụ thể</td></tr>
+        <tr><td>Hotfix khẩn</td><td><code>hotfix/loi-khẩn-cap</code></td><td>Lỗi nghiêm trọng trên production</td></tr>
+        <tr><td>Cải thiện</td><td><code>refactor/ten-phan</code></td><td>Viết lại code không đổi tính năng</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>💻 Làm việc với Branch</h3>
+    <div class="code-block">
+<span class="comment"># Xem tất cả branch hiện có</span>
+<span class="cmd">git</span> <span class="arg">branch</span>
+
+<span class="comment"># Tạo branch mới và chuyển sang ngay</span>
+<span class="cmd">git</span> <span class="arg">checkout</span> -b <span class="str">feature/login</span>
+
+<span class="comment"># Chuyển sang branch có sẵn</span>
+<span class="cmd">git</span> <span class="arg">checkout</span> <span class="str">main</span>
+
+<span class="comment"># Đẩy branch lên GitHub</span>
+<span class="cmd">git</span> <span class="arg">push</span> origin <span class="str">feature/login</span>
+
+<span class="comment"># Merge branch vào main (sau khi review xong)</span>
+<span class="cmd">git</span> <span class="arg">checkout</span> main
+<span class="cmd">git</span> <span class="arg">merge</span> <span class="str">feature/login</span>
+    </div>
+    <div class="box box-w">
+      <span class="box-icon">⚠️</span>
+      <div><strong>Lưu ý:</strong> Thực tế khi làm nhóm, bạn không merge trực tiếp như vậy. Thay vào đó, tạo <strong>Pull Request</strong> (xem chương 08) để đồng đội review trước.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ======== CH07 ======== -->
+<div class="section-wrap" id="ch07">
+  <div class="chapter-hero">
+    <div class="ch-num">07</div>
+    <div class="ch-info">
+      <h2>Issues — Quản lý công việc</h2>
+      <p>Theo dõi lỗi, nhiệm vụ và đề xuất tính năng</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>⚠️ Trang Issues</h3>
+    <div class="ss-wrap">
+      <div class="ss-bar"><span class="dot dr"></span><span class="dot dy"></span><span class="dot dg"></span><span class="ss-url">🔒 github.com/github/gitignore/issues</span></div>
+      <img src="gh_issues.png" alt="Trang Issues trên GitHub">
+    </div>
+    <p class="ss-caption">↑ Danh sách Issues — mỗi Issue là một nhiệm vụ hoặc báo cáo lỗi</p>
+  </div>
+
+  <div class="card">
+    <h3>📌 Issue là gì và dùng khi nào?</h3>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon">🐛</div>
+        <h4>Báo lỗi (Bug report)</h4>
+        <p>Tìm thấy lỗi trong code → tạo Issue mô tả lỗi, cách tái hiện.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">✨</div>
+        <h4>Yêu cầu tính năng</h4>
+        <p>Đề xuất thêm chức năng mới vào dự án.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">❓</div>
+        <h4>Câu hỏi / Hỗ trợ</h4>
+        <p>Hỏi về cách dùng, cách cài đặt dự án.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📋</div>
+        <h4>Nhiệm vụ (Task)</h4>
+        <p>Giao việc cho thành viên trong nhóm.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>✏️ Cách tạo Issue mới</h3>
+    <ul class="steps">
+      <li><div class="step-n">1</div><div class="step-body"><strong>Vào tab Issues</strong><p>Nhấn tab <em>Issues</em> trong repo.</p></div></li>
+      <li><div class="step-n">2</div><div class="step-body"><strong>Bấm "New issue"</strong><p>Nút xanh lá ở góc trên phải.</p></div></li>
+      <li><div class="step-n">3</div><div class="step-body"><strong>Điền tiêu đề</strong><p>Ngắn gọn, rõ ràng. Ví dụ: <em>"Login button doesn't work on mobile"</em></p></div></li>
+      <li><div class="step-n">4</div><div class="step-body"><strong>Mô tả chi tiết</strong><p>Hỗ trợ Markdown. Thêm ảnh chụp màn hình, bước tái hiện lỗi, môi trường...</p></div></li>
+      <li><div class="step-n">5</div><div class="step-body"><strong>Gán nhãn (Labels) & Người phụ trách (Assignees)</strong><p>Phân loại và giao việc cho đúng người.</p></div></li>
+      <li><div class="step-n">6</div><div class="step-body"><strong>Submit new issue</strong><p>Bấm nút xanh lá để tạo.</p></div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>🏷️ Trạng thái Issue</h3>
+    <p>
+      <span class="lbl lbl-open">● Open</span> &nbsp; Issue đang mở — chưa được xử lý hoặc đang xử lý<br><br>
+      <span class="lbl lbl-closed">● Closed</span> &nbsp; Issue đã đóng — đã sửa xong hoặc không hợp lệ
+    </p>
+    <div class="box box-i" style="margin-top:16px;">
+      <span class="box-icon">💡</span>
+      <div>Gõ <strong>#số</strong> trong bất kỳ comment nào để tham chiếu tới Issue đó. Ví dụ: <em>"Fixed in #42"</em> → GitHub tự tạo link.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ======== CH08 ======== -->
+<div class="section-wrap" id="ch08">
+  <div class="chapter-hero">
+    <div class="ch-num">08</div>
+    <div class="ch-info">
+      <h2>Pull Request (PR)</h2>
+      <p>Đề xuất, review và merge code một cách an toàn</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔀 Trang Pull Requests</h3>
+    <div class="ss-wrap">
+      <div class="ss-bar"><span class="dot dr"></span><span class="dot dy"></span><span class="dot dg"></span><span class="ss-url">🔒 github.com/github/gitignore/pulls</span></div>
+      <img src="gh_pulls.png" alt="Trang Pull Requests trên GitHub">
+    </div>
+    <p class="ss-caption">↑ Danh sách Pull Requests — mỗi PR là một đề xuất thay đổi code chờ review</p>
+  </div>
+
+  <div class="card">
+    <h3>🤔 Pull Request là gì?</h3>
+    <p>Khi bạn làm xong tính năng trên branch riêng, bạn tạo <strong>Pull Request</strong> để:</p>
+    <ul class="steps">
+      <li><div class="step-n">👀</div><div class="step-body"><strong>Cho đồng đội review</strong><p>Người khác xem code của bạn, comment góp ý trước khi merge.</p></div></li>
+      <li><div class="step-n">✅</div><div class="step-body"><strong>Chạy test tự động</strong><p>GitHub Actions có thể tự chạy test — chỉ merge khi tất cả pass.</p></div></li>
+      <li><div class="step-n">🔀</div><div class="step-body"><strong>Merge vào main</strong><p>Sau khi được approve → merge code vào nhánh chính một cách an toàn.</p></div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>📝 Quy trình tạo Pull Request</h3>
+    <ul class="steps">
+      <li><div class="step-n">1</div><div class="step-body"><strong>Push branch lên GitHub</strong><p><code>git push origin feature/ten-tinh-nang</code></p></div></li>
+      <li><div class="step-n">2</div><div class="step-body"><strong>GitHub gợi ý tạo PR</strong><p>Sau khi push, GitHub hiện banner "Compare & pull request" — nhấn vào.</p></div></li>
+      <li><div class="step-n">3</div><div class="step-body"><strong>Điền tiêu đề & mô tả</strong><p>Giải thích PR này làm gì, tại sao cần thay đổi này.</p></div></li>
+      <li><div class="step-n">4</div><div class="step-body"><strong>Chọn Reviewers</strong><p>Tag người cần review code của bạn.</p></div></li>
+      <li><div class="step-n">5</div><div class="step-body"><strong>Create Pull Request</strong><p>Bấm nút xanh lá. Đồng đội nhận thông báo.</p></div></li>
+      <li><div class="step-n">6</div><div class="step-body"><strong>Review & Sửa</strong><p>Đồng đội comment, bạn sửa, push thêm commit vào branch đó.</p></div></li>
+      <li><div class="step-n">7</div><div class="step-body"><strong>Merge PR</strong><p>Được approve → bấm <em>Merge pull request</em>.</p></div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>🏷️ Trạng thái Pull Request</h3>
+    <p>
+      <span class="lbl lbl-open">● Open</span> &nbsp; Đang chờ review hoặc sửa thêm<br><br>
+      <span class="lbl lbl-merged">● Merged</span> &nbsp; Đã được merge vào branch đích<br><br>
+      <span class="lbl lbl-closed">● Closed</span> &nbsp; Bị đóng mà không merge (bị từ chối hoặc không cần nữa)
+    </p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ======== CH09 ======== -->
+<div class="section-wrap" id="ch09">
+  <div class="chapter-hero">
+    <div class="ch-num">09</div>
+    <div class="ch-info">
+      <h2>Fork — Sao chép Repo người khác</h2>
+      <p>Đóng góp vào open source hoặc dùng code làm nền tảng</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🍴 Fork là gì?</h3>
+    <p><strong>Fork</strong> là tạo bản sao của repo người khác vào tài khoản của bạn. Bạn có toàn quyền chỉnh sửa bản sao đó.</p>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon">🔓</div>
+        <h4>Clone (tải về)</h4>
+        <p>Tải repo về máy. Không có quyền push lên repo gốc của người khác.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🍴</div>
+        <h4>Fork (sao chép)</h4>
+        <p>Tạo bản sao trên tài khoản bạn. Có thể chỉnh sửa tự do, rồi gửi PR về gốc.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📝 Cách Fork và đóng góp</h3>
+    <ul class="steps">
+      <li><div class="step-n">1</div><div class="step-body"><strong>Nhấn nút "Fork" trên repo gốc</strong><p>Nút Fork ở góc trên phải trang repo. GitHub tạo bản sao vào tài khoản bạn.</p></div></li>
+      <li><div class="step-n">2</div><div class="step-body"><strong>Clone bản fork về máy</strong><p><code>git clone https://github.com/TEN-BAN/ten-repo.git</code></p></div></li>
+      <li><div class="step-n">3</div><div class="step-body"><strong>Tạo branch, làm thay đổi</strong><p>Không làm việc trực tiếp trên <code>main</code> — tạo branch riêng.</p></div></li>
+      <li><div class="step-n">4</div><div class="step-body"><strong>Push lên fork của bạn</strong><p><code>git push origin feature/cua-ban</code></p></div></li>
+      <li><div class="step-n">5</div><div class="step-body"><strong>Tạo Pull Request về repo gốc</strong><p>GitHub hiện nút <em>"Contribute → Open pull request"</em>. Chủ repo gốc sẽ review và merge nếu đồng ý.</p></div></li>
+    </ul>
+    <div class="box box-s">
+      <span class="box-icon">🌟</span>
+      <div>Đây là cách hàng triệu lập trình viên đóng góp vào các dự án open source nổi tiếng như React, Linux, VS Code...</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ======== CH10 ======== -->
+<div class="section-wrap" id="ch10">
+  <div class="chapter-hero">
+    <div class="ch-num">10</div>
+    <div class="ch-info">
+      <h2>GitHub Profile</h2>
+      <p>Trang cá nhân — portfolio kỹ thuật của bạn</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>👤 Trang Profile của bạn</h3>
+    <div class="ss-wrap">
+      <div class="ss-bar"><span class="dot dr"></span><span class="dot dy"></span><span class="dot dg"></span><span class="ss-url">🔒 github.com/trongcao87</span></div>
+      <img src="gh_profile.png" alt="GitHub Profile">
+    </div>
+    <p class="ss-caption">↑ Trang profile — nơi nhà tuyển dụng sẽ xem để đánh giá kỹ năng của bạn</p>
+  </div>
+
+  <div class="card">
+    <h3>📊 Contribution Graph (Biểu đồ đóng góp)</h3>
+    <p>Ô vuông xanh hiển thị mỗi ngày bạn commit bao nhiêu lần. Càng nhiều → màu càng đậm.</p>
+    <div class="box box-i">
+      <span class="box-icon">💡</span>
+      <div>Nhà tuyển dụng thường xem contribution graph để đánh giá <strong>tính nhất quán</strong> trong việc code. Cố gắng commit mỗi ngày, dù chỉ là cải thiện nhỏ!</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>✨ Tạo Profile README đặc biệt</h3>
+    <p>GitHub cho phép bạn thêm README cá nhân hiển thị trên trang profile:</p>
+    <ul class="steps">
+      <li><div class="step-n">1</div><div class="step-body"><strong>Tạo repo tên trùng với username</strong><p>Ví dụ: username là <code>trongcao87</code> → tạo repo tên <code>trongcao87</code></p></div></li>
+      <li><div class="step-n">2</div><div class="step-body"><strong>Thêm file README.md</strong><p>GitHub tự động hiển thị nội dung file này trên trang profile.</p></div></li>
+      <li><div class="step-n">3</div><div class="step-body"><strong>Tuỳ chỉnh nội dung</strong><p>Thêm giới thiệu bản thân, kỹ năng, dự án nổi bật, link liên hệ...</p></div></li>
+    </ul>
+    <div class="box box-s">
+      <span class="box-icon">🎨</span>
+      <div>Tìm kiếm "GitHub profile README examples" để xem hàng ngàn ví dụ đẹp mắt từ cộng đồng!</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ======== CH11 ======== -->
+<div class="section-wrap" id="ch11">
+  <div class="chapter-hero">
+    <div class="ch-num">11</div>
+    <div class="ch-info">
+      <h2>Bảng tra lệnh Git cơ bản</h2>
+      <p>Cheat sheet — tra cứu nhanh khi cần</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔧 Khởi tạo & Clone</h3>
+    <div class="code-block">
+<span class="comment"># Khởi tạo repo Git mới trên máy</span>
+<span class="cmd">git</span> <span class="arg">init</span>
+
+<span class="comment"># Clone repo từ GitHub về máy</span>
+<span class="cmd">git</span> <span class="arg">clone</span> <span class="str">https://github.com/username/repo.git</span>
+
+<span class="comment"># Clone vào thư mục cụ thể</span>
+<span class="cmd">git</span> <span class="arg">clone</span> <span class="str">https://github.com/username/repo.git</span> <span class="arg">ten-thu-muc</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📦 Commit & Push</h3>
+    <div class="code-block">
+<span class="comment"># Xem trạng thái file</span>
+<span class="cmd">git</span> <span class="arg">status</span>
+
+<span class="comment"># Xem thay đổi cụ thể</span>
+<span class="cmd">git</span> <span class="arg">diff</span>
+
+<span class="comment"># Thêm file vào staging</span>
+<span class="cmd">git</span> <span class="arg">add</span> <span class="str">.</span>
+<span class="cmd">git</span> <span class="arg">add</span> <span class="str">ten-file.html</span>
+
+<span class="comment"># Tạo commit</span>
+<span class="cmd">git</span> <span class="arg">commit</span> -m <span class="str">"Mô tả thay đổi"</span>
+
+<span class="comment"># Push lên GitHub</span>
+<span class="cmd">git</span> <span class="arg">push</span> origin main
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🌿 Branch</h3>
+    <div class="code-block">
+<span class="comment"># Xem danh sách branch</span>
+<span class="cmd">git</span> <span class="arg">branch</span>
+
+<span class="comment"># Tạo branch mới</span>
+<span class="cmd">git</span> <span class="arg">checkout</span> -b <span class="str">feature/ten-tinh-nang</span>
+
+<span class="comment"># Chuyển branch</span>
+<span class="cmd">git</span> <span class="arg">checkout</span> <span class="str">main</span>
+
+<span class="comment"># Xoá branch đã merge</span>
+<span class="cmd">git</span> <span class="arg">branch</span> -d <span class="str">feature/ten-tinh-nang</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>⬇️ Pull & Sync</h3>
+    <div class="code-block">
+<span class="comment"># Kéo code mới nhất từ GitHub về</span>
+<span class="cmd">git</span> <span class="arg">pull</span> origin main
+
+<span class="comment"># Xem lịch sử commit</span>
+<span class="cmd">git</span> <span class="arg">log</span> --oneline
+
+<span class="comment"># Hoàn tác thay đổi chưa commit</span>
+<span class="cmd">git</span> <span class="arg">restore</span> <span class="str">.</span>
+
+<span class="comment"># Xem remote URL</span>
+<span class="cmd">git</span> <span class="arg">remote</span> -v
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📊 Bảng tổng hợp các lệnh hay dùng nhất</h3>
+    <table>
+      <thead><tr><th>Lệnh</th><th>Tác dụng</th><th>Tần suất dùng</th></tr></thead>
+      <tbody>
+        <tr><td><code>git status</code></td><td>Xem file nào thay đổi</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td><code>git add .</code></td><td>Thêm tất cả vào staging</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td><code>git commit -m ""</code></td><td>Lưu điểm checkpoint</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td><code>git push</code></td><td>Đẩy lên GitHub</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td><code>git pull</code></td><td>Lấy code mới nhất</td><td>⭐⭐⭐⭐</td></tr>
+        <tr><td><code>git checkout -b</code></td><td>Tạo branch mới</td><td>⭐⭐⭐</td></tr>
+        <tr><td><code>git log --oneline</code></td><td>Xem lịch sử ngắn gọn</td><td>⭐⭐⭐</td></tr>
+        <tr><td><code>git clone</code></td><td>Tải repo về máy</td><td>⭐⭐⭐</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>🐙 Sổ Tay GitHub — Dành Cho Người Mới</strong><br>
+  Phiên bản 2026 &nbsp;·&nbsp; Tài liệu chính thức: <strong>docs.github.com</strong><br>
+  <div style="margin-top:12px; color:#30363d;">Học Git nâng cao: <strong>git-scm.com/book</strong> &nbsp;|&nbsp; GitHub Skills: <strong>skills.github.com</strong></div>
+</footer>
+
+</div><!-- .main -->
+
+<script>
+// Active nav highlight on scroll
+const sections = document.querySelectorAll('[id^="ch"], #cover');
+const navItems = document.querySelectorAll('.nav-item');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  navItems.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+</body>
+</html>

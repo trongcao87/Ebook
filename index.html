@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hướng Dẫn Tạo Repository Mới trên GitHub</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f5f7fa;
+    color: #24292f;
+    line-height: 1.7;
+  }
+
+  /* Cover */
+  .cover {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #21262d 100%);
+    color: white;
+    text-align: center;
+    padding: 80px 40px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .cover .github-logo {
+    font-size: 80px;
+    margin-bottom: 24px;
+  }
+  .cover h1 {
+    font-size: 2.8em;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .cover h1 span { color: #58a6ff; }
+  .cover .subtitle {
+    font-size: 1.2em;
+    color: #8b949e;
+    max-width: 500px;
+    margin-bottom: 40px;
+  }
+  .cover .badge {
+    background: #238636;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+  }
+  .cover .meta {
+    margin-top: 40px;
+    color: #6e7681;
+    font-size: 0.85em;
+  }
+
+  /* Content */
+  .page-break { page-break-before: always; }
+
+  .content {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  /* Chapter header */
+  .chapter-header {
+    background: linear-gradient(135deg, #0d1117, #21262d);
+    color: white;
+    padding: 60px 40px;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .chapter-number {
+    font-size: 4em;
+    font-weight: 900;
+    color: #58a6ff;
+    line-height: 1;
+    min-width: 80px;
+  }
+  .chapter-header h2 {
+    font-size: 1.8em;
+    margin-bottom: 8px;
+  }
+  .chapter-header p { color: #8b949e; }
+
+  /* Section */
+  .section {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 28px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid #e1e4e8;
+  }
+
+  .section h3 {
+    font-size: 1.2em;
+    color: #0d1117;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section h3 .icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    flex-shrink: 0;
+  }
+  .icon-blue { background: #ddf4ff; color: #0969da; }
+  .icon-green { background: #dafbe1; color: #2da44e; }
+  .icon-orange { background: #fff8c5; color: #9a6700; }
+  .icon-purple { background: #f3eeff; color: #8250df; }
+  .icon-red { background: #ffebe9; color: #d1242f; }
+
+  /* Screenshot container */
+  .screenshot-box {
+    border: 2px solid #e1e4e8;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  }
+  .screenshot-box .browser-bar {
+    background: #f6f8fa;
+    border-bottom: 1px solid #e1e4e8;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8em;
+    color: #57606a;
+  }
+  .browser-bar .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #ffbd2e; }
+  .dot-green { background: #28c840; }
+  .browser-bar .url {
+    background: white;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    padding: 3px 10px;
+    flex: 1;
+    font-family: monospace;
+    color: #24292f;
+  }
+  .screenshot-box img {
+    width: 100%;
+    display: block;
+  }
+
+  /* Step */
+  .step {
+    display: flex;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #0969da;
+    color: white;
+    font-size: 0.85em;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content p { margin-bottom: 6px; }
+  .step-content strong { color: #0d1117; }
+
+  /* Info boxes */
+  .info-box {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .info-box .info-icon { font-size: 1.2em; flex-shrink: 0; margin-top: 2px; }
+  .info-tip { background: #ddf4ff; border-left: 4px solid #0969da; }
+  .info-warning { background: #fff8c5; border-left: 4px solid #9a6700; }
+  .info-success { background: #dafbe1; border-left: 4px solid #2da44e; }
+
+  /* Field annotation */
+  .field-card {
+    background: #f6f8fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 12px 0;
+  }
+  .field-card .field-name {
+    font-weight: 700;
+    color: #0969da;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .field-card .field-desc { color: #57606a; font-size: 0.95em; }
+  .field-card .field-example {
+    background: #e6f0ff;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-family: monospace;
+    font-size: 0.9em;
+    color: #0550ae;
+    display: inline-block;
+    margin-top: 8px;
+  }
+
+  /* Option cards */
+  .option-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .option-card {
+    border: 2px solid #e1e4e8;
+    border-radius: 10px;
+    padding: 16px;
+    position: relative;
+  }
+  .option-card.recommended { border-color: #2da44e; }
+  .option-card .opt-title {
+    font-weight: 700;
+    font-size: 1em;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .option-card .opt-desc { font-size: 0.88em; color: #57606a; }
+  .badge-rec {
+    background: #2da44e;
+    color: white;
+    font-size: 0.7em;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  /* Checklist */
+  .checklist { list-style: none; }
+  .checklist li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist .check { color: #2da44e; font-size: 1.1em; }
+
+  /* Summary table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.93em;
+  }
+  th {
+    background: #0d1117;
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid #e1e4e8; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f6f8fa; }
+
+  /* Footer */
+  .ebook-footer {
+    background: #0d1117;
+    color: #8b949e;
+    text-align: center;
+    padding: 40px;
+    margin-top: 60px;
+    font-size: 0.88em;
+  }
+  .ebook-footer .footer-title { color: white; font-size: 1.1em; font-weight: 700; margin-bottom: 8px; }
+
+  @media print {
+    .cover { min-height: auto; padding: 60px 40px; }
+    .content { padding: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== COVER ===== -->
+<div class="cover">
+  <div class="github-logo">🐙</div>
+  <h1>Hướng Dẫn Tạo<br><span>Repository Mới</span><br>trên GitHub</h1>
+  <p class="subtitle">Dành cho người mới bắt đầu — từng bước chi tiết, có ảnh minh hoạ và giải thích rõ ràng</p>
+  <div class="badge">📖 Ebook cho Người Mới</div>
+  <div class="meta">Cập nhật: Tháng 6 / 2026 &nbsp;·&nbsp; github.com/new</div>
+</div>
+
+<!-- ===== MỤC LỤC ===== -->
+<div class="content">
+  <div class="section" style="margin-top:40px;">
+    <h3><span class="icon icon-blue">📋</span> Mục Lục</h3>
+    <ul style="list-style:none; line-height:2.2;">
+      <li>01 &nbsp;—&nbsp; <strong>Repository là gì?</strong> (Giải thích cơ bản)</li>
+      <li>02 &nbsp;—&nbsp; <strong>Truy cập trang tạo repo</strong></li>
+      <li>03 &nbsp;—&nbsp; <strong>Phần General</strong> — Điền tên & mô tả</li>
+      <li>04 &nbsp;—&nbsp; <strong>Phần Configuration</strong> — Cài đặt quyền & tính năng</li>
+      <li>05 &nbsp;—&nbsp; <strong>Tạo Repository</strong> — Bấm nút & hoàn thành</li>
+      <li>06 &nbsp;—&nbsp; <strong>Tóm tắt</strong> & Bước tiếp theo</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== CHƯƠNG 01 ===== -->
+<div class="content">
+  <div class="chapter-header">
+    <div class="chapter-number">01</div>
+    <div>
+      <h2>Repository là gì?</h2>
+      <p>Hiểu khái niệm trước khi bắt đầu</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3><span class="icon icon-blue">💡</span> Giải thích đơn giản</h3>
+    <p>Hãy tưởng tượng <strong>Repository</strong> (gọi tắt là <em>repo</em>) giống như một <strong>thư mục dự án trên đám mây</strong>.</p>
+    <br>
+    <div class="step">
+      <div class="step-num">📁</div>
+      <div class="step-content">
+        <strong>Lưu trữ toàn bộ code</strong><br>
+        Tất cả file, folder của dự án đều nằm trong repo.
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">🕐</div>
+      <div class="step-content">
+        <strong>Lưu lịch sử thay đổi</strong><br>
+        Mỗi lần bạn sửa code, GitHub ghi nhớ thay đổi đó. Bạn có thể quay lại phiên bản cũ bất cứ lúc nào.
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">👥</div>
+      <div class="step-content">
+        <strong>Làm việc nhóm</strong><br>
+        Nhiều người cùng chỉnh sửa dự án mà không lo bị ghi đè.
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">🌍</div>
+      <div class="step-content">
+        <strong>Chia sẻ với thế giới</strong><br>
+        Bạn có thể chia sẻ link repo để người khác xem, dùng, hoặc đóng góp vào dự án.
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box info-tip">
+    <span class="info-icon">💬</span>
+    <div><strong>Ví dụ thực tế:</strong> Bạn viết một website bán hàng. Thay vì lưu trên máy tính cá nhân (dễ mất), bạn lưu lên GitHub. Đồng nghiệp có thể truy cập, chỉnh sửa cùng lúc, và mọi thay đổi đều được ghi lại.</div>
+  </div>
+</div>
+
+<!-- ===== CHƯƠNG 02 ===== -->
+<div class="content">
+  <div class="chapter-header">
+    <div class="chapter-number">02</div>
+    <div>
+      <h2>Truy cập trang tạo Repo</h2>
+      <p>Bước đầu tiên: mở trình duyệt và vào đúng địa chỉ</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3><span class="icon icon-green">🌐</span> Cách truy cập</h3>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        Mở trình duyệt (Chrome, Firefox, Edge…)
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Đăng nhập</strong> tài khoản GitHub tại <code style="background:#f0f0f0;padding:2px 6px;border-radius:4px;">github.com</code>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        Truy cập trực tiếp địa chỉ: <code style="background:#f0f0f0;padding:2px 6px;border-radius:4px;">github.com/new</code>
+      </div>
+    </div>
+
+    <div class="screenshot-box" style="margin-top:20px;">
+      <div class="browser-bar">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+        <span class="url">🔒 github.com/new</span>
+      </div>
+      <img src="screenshot_full.png" alt="Trang tạo repository mới trên GitHub">
+    </div>
+    <p style="font-size:0.85em;color:#57606a;text-align:center;margin-top:8px;">↑ Đây là trang bạn sẽ thấy khi vào github.com/new</p>
+
+    <div class="info-box info-warning" style="margin-top:16px;">
+      <span class="info-icon">⚠️</span>
+      <div><strong>Lưu ý:</strong> Bạn cần đăng nhập trước. Nếu chưa có tài khoản, hãy đăng ký miễn phí tại <code>github.com/signup</code></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHƯƠNG 03 ===== -->
+<div class="content">
+  <div class="chapter-header">
+    <div class="chapter-number">03</div>
+    <div>
+      <h2>Phần General</h2>
+      <p>Điền thông tin cơ bản: tên & mô tả dự án</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3><span class="icon icon-blue">👤</span> Ảnh chụp phần General</h3>
+    <div class="screenshot-box">
+      <div class="browser-bar">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+        <span class="url">🔒 github.com/new</span>
+      </div>
+      <img src="s1_general.png" alt="Phần General - Owner và Repository name">
+    </div>
+  </div>
+
+  <!-- Owner -->
+  <div class="section">
+    <h3><span class="icon icon-orange">👤</span> Trường: Owner (Chủ sở hữu)</h3>
+    <div class="field-card">
+      <div class="field-name">Owner *</div>
+      <div class="field-desc">Đây là <strong>tài khoản sở hữu repo</strong>. Thường là tên tài khoản cá nhân của bạn, hoặc tên tổ chức/nhóm nếu bạn là thành viên.</div>
+      <span class="field-example">trongcao87</span>
+    </div>
+    <div class="info-box info-tip">
+      <span class="info-icon">💡</span>
+      <div><strong>Khi nào chọn Organization?</strong> Nếu bạn làm việc cho công ty hoặc nhóm trên GitHub, chọn tên tổ chức thay vì tên cá nhân. Repo sẽ thuộc về tổ chức đó.</div>
+    </div>
+    <p><strong>Hành động:</strong> Hầu hết người dùng mới <strong>giữ nguyên mặc định</strong> (tên tài khoản cá nhân).</p>
+  </div>
+
+  <!-- Repository name -->
+  <div class="section">
+    <h3><span class="icon icon-blue">📝</span> Trường: Repository name (Tên Repo)</h3>
+    <div class="field-card">
+      <div class="field-name">Repository name *</div>
+      <div class="field-desc">Tên duy nhất cho repo của bạn. Tên này sẽ xuất hiện trong URL và là cách mọi người nhận ra dự án của bạn.</div>
+      <span class="field-example">my-first-project</span>
+    </div>
+
+    <p style="margin:12px 0 8px;"><strong>Quy tắc đặt tên tốt:</strong></p>
+    <ul style="list-style:none;">
+      <li style="padding:6px 0; border-bottom:1px solid #f0f0f0;">✅ Dùng chữ thường, số, và dấu gạch ngang <code>-</code></li>
+      <li style="padding:6px 0; border-bottom:1px solid #f0f0f0;">✅ Ngắn gọn, dễ nhớ: <code>bai-tap-html</code>, <code>portfolio-website</code></li>
+      <li style="padding:6px 0; border-bottom:1px solid #f0f0f0;">❌ Tránh dấu cách — dùng <code>-</code> thay thế</li>
+      <li style="padding:6px 0;">❌ Tránh ký tự đặc biệt: <code>@</code>, <code>#</code>, <code>!</code>…</li>
+    </ul>
+
+    <div class="info-box info-warning" style="margin-top:16px;">
+      <span class="info-icon">⚠️</span>
+      <div>Tên repo <strong>không được trùng</strong> với repo khác trong cùng tài khoản. GitHub sẽ báo lỗi ngay nếu bị trùng.</div>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="section">
+    <h3><span class="icon icon-purple">💬</span> Trường: Description (Mô tả)</h3>
+    <div class="field-card">
+      <div class="field-name">Description</div>
+      <div class="field-desc">Mô tả ngắn về dự án của bạn. Xuất hiện ngay dưới tên repo trên GitHub. Tối đa 350 ký tự.</div>
+      <span class="field-example">Website portfolio cá nhân bằng HTML/CSS</span>
+    </div>
+
+    <div class="info-box info-tip">
+      <span class="info-icon">💡</span>
+      <div><strong>Có bắt buộc không?</strong> Không — nhưng <strong>nên điền</strong>. Một mô tả tốt giúp người khác (và chính bạn sau này) hiểu ngay repo này dùng để làm gì.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHƯƠNG 04 ===== -->
+<div class="content">
+  <div class="chapter-header">
+    <div class="chapter-number">04</div>
+    <div>
+      <h2>Phần Configuration</h2>
+      <p>Cài đặt quyền truy cập và các tính năng khởi tạo</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3><span class="icon icon-blue">⚙️</span> Ảnh chụp phần Configuration</h3>
+    <div class="screenshot-box">
+      <div class="browser-bar">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+        <span class="url">🔒 github.com/new</span>
+      </div>
+      <img src="s2_config.png" alt="Phần Configuration - Visibility, README, .gitignore, License">
+    </div>
+  </div>
+
+  <!-- Visibility -->
+  <div class="section">
+    <h3><span class="icon icon-green">👁️</span> Cài đặt: Choose Visibility (Quyền truy cập)</h3>
+    <p style="margin-bottom:14px;">Bạn muốn <strong>ai được nhìn thấy</strong> repo này?</p>
+
+    <div class="option-grid">
+      <div class="option-card recommended">
+        <div class="opt-title">🌍 Public <span class="badge-rec">Phổ biến nhất</span></div>
+        <div class="opt-desc">Ai cũng có thể xem code của bạn. Phù hợp để chia sẻ portfolio, open source, bài tập học tập.</div>
+      </div>
+      <div class="option-card">
+        <div class="opt-title">🔒 Private</div>
+        <div class="opt-desc">Chỉ bạn và người được mời mới thấy. Phù hợp cho dự án công ty, dự án cá nhân chưa muốn công khai.</div>
+      </div>
+    </div>
+
+    <div class="info-box info-tip">
+      <span class="info-icon">💡</span>
+      <div><strong>Gợi ý cho người mới:</strong> Chọn <strong>Public</strong> nếu đây là bài tập hoặc dự án học tập. Chọn <strong>Private</strong> nếu có thông tin nhạy cảm (mật khẩu, API key trong code).</div>
+    </div>
+  </div>
+
+  <!-- README -->
+  <div class="section">
+    <h3><span class="icon icon-orange">📄</span> Cài đặt: Add README</h3>
+    <div class="field-card">
+      <div class="field-name">Add README</div>
+      <div class="field-desc">README là file <code>README.md</code> — trang "bìa" của repo. Khi ai vào repo của bạn, họ sẽ đọc file này đầu tiên. Nó thường chứa: mô tả dự án, cách cài đặt, cách sử dụng.</div>
+    </div>
+
+    <div class="info-box info-success">
+      <span class="info-icon">✅</span>
+      <div><strong>Nên bật ON.</strong> Đặc biệt với người mới — bật README giúp repo không bị trống rỗng và dễ bắt đầu hơn. Bạn có thể chỉnh sửa nội dung README sau.</div>
+    </div>
+  </div>
+
+  <!-- .gitignore -->
+  <div class="section">
+    <h3><span class="icon icon-red">🙈</span> Cài đặt: Add .gitignore</h3>
+    <div class="field-card">
+      <div class="field-name">Add .gitignore</div>
+      <div class="field-desc">File <code>.gitignore</code> liệt kê những file/folder <strong>không muốn</strong> đẩy lên GitHub. Ví dụ: file <code>node_modules/</code> (nặng, không cần thiết), file <code>.env</code> (chứa mật khẩu bí mật).</div>
+    </div>
+
+    <p style="margin:12px 0 8px;"><strong>Cách chọn:</strong></p>
+    <ul style="list-style:none;">
+      <li style="padding:6px 0; border-bottom:1px solid #f0f0f0;">→ Dự án <strong>Node.js/React</strong>: chọn <code>Node</code></li>
+      <li style="padding:6px 0; border-bottom:1px solid #f0f0f0;">→ Dự án <strong>Python</strong>: chọn <code>Python</code></li>
+      <li style="padding:6px 0;">→ Chưa biết: giữ <strong>No .gitignore</strong> và thêm sau cũng được</li>
+    </ul>
+
+    <div class="info-box info-tip">
+      <span class="info-icon">💡</span>
+      <div>Nếu bạn chỉ làm HTML/CSS đơn giản, bỏ qua cài đặt này cũng không sao.</div>
+    </div>
+  </div>
+
+  <!-- License -->
+  <div class="section">
+    <h3><span class="icon icon-purple">⚖️</span> Cài đặt: Add license (Giấy phép)</h3>
+    <div class="field-card">
+      <div class="field-name">Add license</div>
+      <div class="field-desc">Giấy phép quy định <strong>người khác được làm gì</strong> với code của bạn — có được dùng thương mại không, có cần ghi tên tác giả không...</div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Giấy phép</th><th>Ý nghĩa</th><th>Khi nào dùng</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>MIT</strong></td><td>Cho phép làm gì cũng được, chỉ cần giữ tên tác giả</td><td>Dự án open source, bài tập</td></tr>
+        <tr><td><strong>Apache 2.0</strong></td><td>Tương tự MIT nhưng có bảo vệ bằng sáng chế</td><td>Dự án lớn hơn</td></tr>
+        <tr><td><strong>No license</strong></td><td>Mặc định — mọi quyền thuộc về tác giả</td><td>Dự án riêng tư, học tập</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box info-tip">
+      <span class="info-icon">💡</span>
+      <div><strong>Gợi ý cho người mới:</strong> Chọn <strong>MIT License</strong> nếu muốn mọi người dùng tự do, hoặc <strong>No license</strong> nếu chưa chắc.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHƯƠNG 05 ===== -->
+<div class="content">
+  <div class="chapter-header">
+    <div class="chapter-number">05</div>
+    <div>
+      <h2>Tạo Repository</h2>
+      <p>Bước cuối: bấm nút xanh lá và hoàn thành!</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3><span class="icon icon-green">🚀</span> Bấm nút "Create repository"</h3>
+    <p>Sau khi điền đầy đủ thông tin, kéo xuống cuối trang và bấm nút:</p>
+
+    <div style="text-align:center; margin:24px 0;">
+      <div style="display:inline-block; background:#2da44e; color:white; padding:12px 28px; border-radius:8px; font-size:1.1em; font-weight:600; box-shadow: 0 3px 8px rgba(45,164,78,0.4);">
+        Create repository
+      </div>
+    </div>
+
+    <p>GitHub sẽ tạo repo và chuyển bạn đến trang repo mới — thường có địa chỉ dạng:</p>
+    <div style="background:#f0f0f0;padding:10px 16px;border-radius:6px;font-family:monospace;margin:12px 0;">
+      github.com/<strong>tên-tài-khoản</strong>/<strong>tên-repo</strong>
+    </div>
+
+    <div class="info-box info-success">
+      <span class="info-icon">🎉</span>
+      <div><strong>Xin chúc mừng!</strong> Bạn đã tạo xong repository đầu tiên trên GitHub!</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3><span class="icon icon-blue">📋</span> Checklist trước khi bấm tạo</h3>
+    <ul class="checklist">
+      <li><span class="check">✅</span> <strong>Owner</strong> đúng tài khoản của bạn</li>
+      <li><span class="check">✅</span> <strong>Tên repo</strong> ngắn gọn, không dấu cách, không trùng</li>
+      <li><span class="check">✅</span> <strong>Description</strong> có điền (không bắt buộc nhưng nên có)</li>
+      <li><span class="check">✅</span> <strong>Visibility</strong> đã chọn Public hoặc Private phù hợp</li>
+      <li><span class="check">✅</span> <strong>README</strong> đã bật nếu muốn repo có nội dung ban đầu</li>
+      <li><span class="check">✅</span> **.gitignore & License</strong> đã chọn phù hợp (hoặc để mặc định)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== CHƯƠNG 06 ===== -->
+<div class="content">
+  <div class="chapter-header">
+    <div class="chapter-number">06</div>
+    <div>
+      <h2>Tóm tắt & Bước Tiếp Theo</h2>
+      <p>Nhìn lại toàn bộ quy trình</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3><span class="icon icon-blue">📊</span> Bảng tóm tắt tất cả các trường</h3>
+    <table>
+      <thead>
+        <tr><th>Trường</th><th>Bắt buộc?</th><th>Gợi ý cho người mới</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Owner</strong></td><td>✅ Có</td><td>Giữ nguyên tên tài khoản cá nhân</td></tr>
+        <tr><td><strong>Repository name</strong></td><td>✅ Có</td><td>Tên ngắn, dùng dấu <code>-</code>, không dấu cách</td></tr>
+        <tr><td><strong>Description</strong></td><td>❌ Không</td><td>Nên điền 1 dòng mô tả ngắn</td></tr>
+        <tr><td><strong>Visibility</strong></td><td>✅ Có</td><td>Public nếu muốn chia sẻ, Private nếu cần bảo mật</td></tr>
+        <tr><td><strong>Add README</strong></td><td>❌ Không</td><td>Nên bật ON cho người mới</td></tr>
+        <tr><td><strong>Add .gitignore</strong></td><td>❌ Không</td><td>Chọn theo ngôn ngữ (Node, Python...) hoặc bỏ qua</td></tr>
+        <tr><td><strong>Add license</strong></td><td>❌ Không</td><td>MIT nếu muốn open source, không thì bỏ qua</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3><span class="icon icon-green">🚀</span> Bước tiếp theo sau khi tạo xong</h3>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Clone repo về máy</strong><br>
+        Dùng lệnh: <code style="background:#f0f0f0;padding:2px 6px;border-radius:4px;">git clone https://github.com/username/repo-name.git</code>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Thêm file vào repo</strong><br>
+        Tạo file, dùng <code>git add .</code> → <code>git commit -m "message"</code> → <code>git push</code>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Chỉnh sửa README</strong><br>
+        Mở file README.md và viết mô tả chi tiết hơn về dự án
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <strong>Chia sẻ link</strong><br>
+        Copy link repo và gửi cho bạn bè, nhà tuyển dụng, hoặc thầy giáo!
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="ebook-footer">
+  <div class="footer-title">🐙 Hướng Dẫn Tạo Repository GitHub</div>
+  <p>Ebook dành cho người mới bắt đầu · Cập nhật tháng 6/2026</p>
+  <p style="margin-top:8px;">Có câu hỏi? Truy cập <strong>docs.github.com</strong> để đọc thêm tài liệu chính thức.</p>
+</div>
+
+</body>
+</html>
